@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{ post.title }}</title></head>
+<body>
+  <h1>{{ post.title }}</h1>
+  <small>Дата публикации: {{ post.created_at|date:"d.m.Y H:i" }}</small>
+  <div>{{ post.content }}</div>
+</body>
+</html>
+
