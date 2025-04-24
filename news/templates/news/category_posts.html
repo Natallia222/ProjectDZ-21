@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости по категории</title>
+</head>
+<body>
+{% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+    <h2>Публикации категории: {{ category.name }}</h2>
+
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'subscribe_to_category' category.id %}">
+        {% csrf_token %}
+        <button type="submit">🔔 Подписаться</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'account_login' %}">Войдите</a>, чтобы подписаться на обновления.</p>
+{% endif %}
+
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br>
+                <small>Дата публикации: {{ post.created_at|date:"d.m.Y H:i" }}</small>
+                <p>{{ post.content|truncatechars:100 }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>В этой категории пока нет публикаций.</p>
+    {% endif %}
+</body>
+</html>
+
